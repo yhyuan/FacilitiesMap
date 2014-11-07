@@ -19,7 +19,7 @@ arcpy.env.workspace = OUTPUT_PATH + "\\FacilitiesMap.gdb"
 featureName = "\\\\LRCTPTVSUAAP003\\agsShared\\Facilities\\data\\FacilitiesMap.gdb\\Facilities"
 USER = arcpy.GetParameterAsText(0)
 ACTION = arcpy.GetParameterAsText(1)
-featureInsertCursorFields = ("SHAPE@XY", "LOCATION", "ADDRESS", "TOTALSQUAREFEET", "ANNUALCOST", "LEASEDOWNED", "LEASEEXPIRY", "LEASEEXPIRY1", "LEASEEXPIRY2","OCCUPANTS", "NUMBEROFSTAFF", "STAFFCAPACITY", "RSFPERFTE", "NUMBEROFFLEET")
+featureInsertCursorFields = ("SHAPE@XY", "LOCATION", "ADDRESS", "TOTALSQUAREFEET", "ANNUALCOST", "LEASEDOWNED", "LEASEEXPIRY", "LEASEEXPIRY1", "LEASEEXPIRY2","OCCUPANTS", "NUMBEROFSTAFF", "STAFFCAPACITY", "RSFPERFTE", "NUMBEROFFLEET", "LOCATIONNAME")
 fieldList = list(featureInsertCursorFields)
 indexDict = {}
 for i in range(len(fieldList)):
@@ -49,9 +49,10 @@ elif ACTION == 'APPEND':
 	STAFFCAPACITY = int(parameters[12])
 	RSFPERFTE = int(parameters[13])
 	NUMBEROFFLEET  = int(parameters[14])
+	LOCATIONNAME = parameters[15]
 	try:
 		with arcpy.da.InsertCursor(featureName, featureInsertCursorFields) as cur:
-			cur.insertRow([(float(LONGITUDE), float(LATITUDE)), LOCATION, ADDRESS, TOTALSQUAREFEET, ANNUALCOST, LEASEDOWNED, LEASEEXPIRY, LEASEEXPIRY1, LEASEEXPIRY2,OCCUPANTS, NUMBEROFSTAFF, STAFFCAPACITY, RSFPERFTE, NUMBEROFFLEET])
+			cur.insertRow([(float(LONGITUDE), float(LATITUDE)), LOCATION, ADDRESS, TOTALSQUAREFEET, ANNUALCOST, LEASEDOWNED, LEASEEXPIRY, LEASEEXPIRY1, LEASEEXPIRY2,OCCUPANTS, NUMBEROFSTAFF, STAFFCAPACITY, RSFPERFTE, NUMBEROFFLEET, LOCATIONNAME])
 	except Exception as e:
 		print "\tError: " + featureName + ": " + e.message
 elif ACTION == 'UPDATE':
